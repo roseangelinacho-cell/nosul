@@ -1,1210 +1,1088 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>술술술</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-  :root {
-    --bg-main: #e7fff1;
-    --bg-panel: #fafffc;
-    --bg-chip: #defdf4;
-    --border-strong: #2c8a64;
-    --border-soft: #9be7c8;
-    --accent-green: #1f996a;
-    --accent-red: #2eb3c7;
-    --accent-yellow: #a5f5ff;
-    --text-main: #124434;
-    --text-soft: #4f7f6d;
+<meta charset="utf-8">
+<title>연애 못 한 자의 저주 — 솔로 지옥 프로젝트</title>
+<meta name="viewport" content="width=1280">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<style>
+  @font-face{
+    font-family:'Galmuri';
+    src:url('https://cdn.jsdelivr.net/gh/quiple/galmuri/dist/Galmuri11.woff2') format('woff2');
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'GalmuriBold';
+    src:url('https://cdn.jsdelivr.net/gh/quiple/galmuri/dist/Galmuri11-Bold.woff2') format('woff2');
+    font-display:swap;
   }
 
-  * {
-    box-sizing: border-box;
+  *{box-sizing:border-box;margin:0;padding:0;image-rendering:pixelated;-webkit-font-smoothing:none;font-smooth:never;}
+  html,body{
+    background:#0d0a1a;color:#e8e0ff;font-family:'Galmuri','Courier New',monospace;
+    font-size:14px;line-height:1.4;min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at top,#2a1f4a 0%,#1a1530 40%,#0d0a1a 100%);
+    overflow-x:hidden;
   }
+  button{font-family:inherit;color:inherit;cursor:pointer;border:none;background:none;}
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    padding: 32px 16px 48px;
-    font-family: "Press Start 2P", cursive;
-    font-size: 0.85rem;
-    background:
-      linear-gradient(90deg, #dff7ef 1px, transparent 1px),
-      linear-gradient(180deg, #dff7ef 1px, transparent 1px),
-      var(--bg-main);
-    background-size: 16px 16px, 16px 16px, auto;
-  }
-
-  .top-area {
-    width: min(900px, 100%);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  header {
-    width: min(520px, 100%);
-  }
-
-  h1 {
-    margin: 0 0 12px;
-    font-size: 1.35rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--border-strong);
-    text-shadow: 0 0 0 #000, 1px 1px 0 #c8f7e7;
-  }
-
-  .title-glitch {
-    display: flex;
-    gap: 6px;
-  }
-
-  .title-glitch span {
-    display: inline-flex;
-    transform-origin: center;
-    letter-spacing: 0.02em;
-  }
-
-  .title-glitch span:nth-child(odd) {
-    transform: rotate(-6deg) translateY(-2px);
-  }
-
-  .title-glitch span:nth-child(even) {
-    transform: rotate(5deg) translateY(3px);
-  }
-
-  .controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: var(--bg-panel);
-    padding: 14px 14px 16px;
-    border: 3px solid var(--border-strong);
-    border-radius: 0;
+  /* ===== Pixel frame helper (stepped border using box-shadow) ===== */
+  .pf{
+    background:rgba(20,15,40,.85);
+    border:3px solid #5a4a8a;
     box-shadow:
-      0 0 0 2px #e6fff4,
-      0 4px 0 0 #1d5a43;
+      0 0 0 3px #0d0a1a,
+      0 0 0 6px #2a1f4a,
+      inset 0 0 0 1px #8a7ac0;
+    padding:14px;
+    position:relative;
+  }
+  .pf::before,.pf::after{
+    content:'';position:absolute;width:6px;height:6px;background:#0d0a1a;
+  }
+  .pf::before{top:-3px;left:-3px;box-shadow:calc(100% + 0px) 0 #0d0a1a;}
+  .pf::after{bottom:-3px;left:-3px;box-shadow:calc(100% + 0px) 0 #0d0a1a;}
+
+  /* ===== Layout ===== */
+  .wrap{max-width:1456px;margin:0 auto;padding:0 18px 30px;position:relative;z-index:2;}
+
+  /* ===== Header ===== */
+  header{
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:14px 22px;margin:14px 0 20px;
+    background:rgba(13,10,26,.9);
+    border:3px solid #5a4a8a;
+    box-shadow:0 0 0 3px #0d0a1a, inset 0 0 0 1px #8a7ac0;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-family:'GalmuriBold',monospace;font-size:18px;color:#fff;}
+  .logo .ph{width:32px;height:32px;}
+  .logo .heart{color:#e34848;}
+  nav{display:flex;gap:22px;}
+  nav a{color:#c8b8e8;text-decoration:none;font-size:15px;}
+  nav a:hover{color:#fff;text-shadow:0 0 4px #a05fc4;}
+  .user-badge{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 16px;border:2px solid #c43838;color:#ff6868;
+    background:rgba(60,10,20,.5);font-family:'GalmuriBold',monospace;
   }
 
-  .controls.hidden {
-    display: none;
+  /* ===== Title ===== */
+  .title-wrap{text-align:center;margin:10px 0 22px;position:relative;}
+  h1.title{
+    font-family:'GalmuriBold',monospace;
+    font-size:78px;color:#e34848;letter-spacing:6px;
+    text-shadow:
+      4px 0 #6a1010, -4px 0 #6a1010, 0 4px #6a1010, 0 -4px #6a1010,
+      4px 4px #6a1010,-4px 4px #6a1010,4px -4px #6a1010,-4px -4px #6a1010,
+      0 8px 0 #3a0808, 0 12px 0 #3a0808, 0 16px 0 #200404,
+      0 0 30px rgba(227,72,72,.4);
+    line-height:1;
+  }
+  .subtitle{
+    margin-top:18px;color:#c8b8e8;font-size:18px;letter-spacing:2px;
+  }
+  .subtitle .flame{color:#a05fc4;margin:0 12px;}
+  .lightning-deco{position:absolute;top:0;height:120px;width:auto;opacity:.9;
+    filter:drop-shadow(0 0 12px currentColor);}
+  .lightning-deco.l{left:14%;color:#ffeb70;animation:flicker 2.4s infinite;}
+  .lightning-deco.r{right:14%;color:#9fcfff;animation:flicker 3.1s infinite .6s;}
+  @keyframes flicker{
+    0%,93%,100%{opacity:.9;}
+    94%{opacity:.2;}96%{opacity:1;}97%{opacity:.4;}98%{opacity:1;}
   }
 
-  .controls label {
-    font-weight: 700;
-    font-size: 0.86rem;
-    color: var(--text-main);
+  /* ===== 3-column grid ===== */
+  .grid{display:grid;grid-template-columns:280px 1fr 280px;gap:18px;align-items:start;}
+
+  /* ===== Status panel ===== */
+  .panel-title{
+    font-family:'GalmuriBold',monospace;text-align:center;
+    color:#fff;letter-spacing:3px;margin-bottom:14px;font-size:15px;
+  }
+  .panel-title .skull{color:#c8b8e8;margin:0 8px;}
+  .stat{margin-bottom:14px;}
+  .stat-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+  .stat-icon{
+    width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.4);border:2px solid #5a4a8a;font-size:18px;
+  }
+  .stat-name{flex:1;font-size:13px;color:#e8e0ff;}
+  .stat-val{font-family:'GalmuriBold',monospace;font-size:13px;}
+  .bar{
+    width:100%;height:14px;background:#0d0a1a;border:2px solid #3a2f5a;
+    position:relative;overflow:hidden;
+  }
+  .bar > i{
+    display:block;height:100%;background:#e34848;
+    transition:width .8s cubic-bezier(.2,.8,.3,1);
+    box-shadow:inset 0 -3px 0 rgba(0,0,0,.3),inset 0 2px 0 rgba(255,255,255,.15);
+  }
+  .bar.anger > i{background:linear-gradient(180deg,#ff8888,#e34848 50%,#a02828);}
+  .bar.solo  > i{background:linear-gradient(180deg,#88c8ff,#4a8fc7 50%,#2a5a8a);}
+  .bar.detect> i{background:linear-gradient(180deg,#d088ff,#a05fc4 50%,#6a3a8a);}
+  .stat-note{font-size:11px;color:#8a7ac0;margin-top:4px;letter-spacing:1px;}
+  .stat-note.max{color:#ff6868;}
+
+  .profile{margin-top:14px;font-size:12px;color:#c8b8e8;line-height:1.7;}
+  .profile .label{color:#a05fc4;}
+
+  .sign-wood{
+    margin-top:18px;position:relative;text-align:center;
+    transform:rotate(-3deg);
+  }
+  .sign-wood img{width:100%;height:auto;display:block;
+    filter:drop-shadow(3px 3px 0 #0d0a1a);}
+  .sign-wood .sign-text{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    font-family:'GalmuriBold',monospace;color:#2a1810;
+    font-size:16px;letter-spacing:2px;text-shadow:1px 1px 0 rgba(255,255,255,.2);
+    pointer-events:none;
+  }
+  .sign-wood .skull{display:block;margin-top:4px;font-size:18px;color:#3a2810;}
+
+  /* ===== Stage (center) ===== */
+  .stage{
+    min-height:600px;position:relative;
+    background:rgba(13,10,26,.4) url('assets/bg_wasteland.png') center/cover no-repeat;
+    border:3px solid #3a2f5a;
+    overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    padding:30px 20px 20px;
+  }
+  .stage::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(13,10,26,.2) 0%,rgba(13,10,26,.5) 100%);
+    pointer-events:none;
+  }
+  .char-area{position:relative;width:100%;flex:1;display:flex;align-items:flex-end;justify-content:center;z-index:2;}
+  .ph{
+    background:repeating-linear-gradient(45deg,#2a1f4a,#2a1f4a 6px,#1a1530 6px,#1a1530 12px);
+    border:2px dashed #8a7ac0;color:#c8b8e8;
+    display:flex;align-items:center;justify-content:center;font-size:11px;
+    text-align:center;line-height:1.3;
+  }
+  .char-img{
+    height:440px;width:auto;object-fit:contain;
+    filter:drop-shadow(0 6px 12px rgba(0,0,0,.6));
+    z-index:2;
+  }
+  .couple-img{
+    position:absolute;height:110px;width:auto;object-fit:contain;
+    filter:drop-shadow(0 4px 6px rgba(0,0,0,.6));
+    z-index:3;
+    opacity:0;transform:translateY(10px) scale(.7);
+    transition:opacity .4s, transform .4s;
+  }
+  .couple-img.in{opacity:1;transform:translateY(0) scale(1);}
+  .couple-img.flee-l{animation:fleeL 1.6s forwards;}
+  .couple-img.flee-r{animation:fleeR 1.6s forwards;}
+  @keyframes fleeL{
+    0%{transform:translateX(0) scale(1);opacity:1;}
+    100%{transform:translateX(-260px) scale(.6);opacity:0;}
+  }
+  @keyframes fleeR{
+    0%{transform:translateX(0) scale(1);opacity:1;}
+    100%{transform:translateX(260px) scale(.6);opacity:0;}
+  }
+  .couple-img.fleeing{filter:drop-shadow(0 0 8px #c43838) drop-shadow(0 4px 6px rgba(0,0,0,.6));}
+  .couple-img.happy{cursor:crosshair;}
+  .couple-img.happy:hover{filter:drop-shadow(0 0 12px #ff6868) drop-shadow(0 4px 6px rgba(0,0,0,.6));transform:translateY(-3px) scale(1.05);}
+  .happy-pop{font-size:18px;color:#ff8888;position:absolute;
+    pointer-events:none;animation:popUp 1.2s forwards;z-index:4;
+    text-shadow:2px 2px 0 #0d0a1a;}
+  @keyframes popUp{
+    0%{opacity:0;transform:translateY(0);}
+    20%{opacity:1;}
+    100%{opacity:0;transform:translateY(-40px);}
   }
 
-  .controls input {
-    padding: 8px 10px;
-    border: 2px solid var(--border-soft);
-    border-radius: 0;
-    font-size: 0.9rem;
-    background: #fff;
-    outline: none;
+  /* ===== Game HUD ===== */
+  .hud{
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    display:flex;gap:14px;z-index:5;
+    font-family:'GalmuriBold',monospace;
+  }
+  .hud-box{
+    background:rgba(13,10,26,.85);border:2px solid #8a7ac0;
+    padding:6px 14px;font-size:13px;color:#fff;letter-spacing:2px;
+    box-shadow:2px 2px 0 #0d0a1a;
+  }
+  .hud-box .v{color:#ffeb70;}
+  .hud-box.combo .v{color:#ff8888;}
+  .hud-box.combo.hot{animation:hot 0.4s infinite alternate;}
+  @keyframes hot{from{transform:scale(1);}to{transform:scale(1.1);}}
+
+  .float-score{
+    position:absolute;font-family:'GalmuriBold',monospace;
+    color:#ffeb70;font-size:18px;pointer-events:none;z-index:6;
+    text-shadow:2px 2px 0 #0d0a1a, 0 0 8px #ffeb70;
+    animation:floatUp 1.2s forwards;
+  }
+  .float-score.combo{color:#ff8888;font-size:22px;text-shadow:2px 2px 0 #0d0a1a, 0 0 10px #ff4848;}
+  @keyframes floatUp{
+    0%{opacity:0;transform:translate(-50%,0);}
+    15%{opacity:1;transform:translate(-50%,-8px);}
+    100%{opacity:0;transform:translate(-50%,-60px);}
+  }
+
+  .act{position:relative;overflow:hidden;}
+  .act .cd{
+    position:absolute;left:0;bottom:0;height:6px;background:#ffeb70;
+    width:0;transition:width .1s linear;
+  }
+  .act.cooling{filter:grayscale(.6) brightness(.7);cursor:not-allowed;}
+  .act.cooling .cd{background:#8a7ac0;}
+
+  /* anger overdrive */
+  .bar.anger.overdrive > i{animation:over 0.3s infinite alternate;}
+  @keyframes over{from{filter:brightness(1);}to{filter:brightness(1.6) drop-shadow(0 0 8px #ff4848);}}
+
+  /* gameover */
+  .gameover{
+    position:fixed;inset:0;background:rgba(0,0,0,.85);
+    display:none;align-items:center;justify-content:center;z-index:60;
+  }
+  .gameover.show{display:flex;}
+  .gameover .panel{
+    text-align:center;padding:36px 50px;background:#1a1530;
+    border:4px solid #ff4848;box-shadow:0 0 0 4px #0d0a1a, inset 0 0 0 1px #fff;
+  }
+  .gameover h2{font-family:'GalmuriBold',monospace;color:#ff4848;font-size:42px;letter-spacing:6px;margin-bottom:16px;
+    text-shadow:4px 4px 0 #6a1010;}
+  .gameover p{color:#fff;font-size:16px;margin-bottom:20px;line-height:1.6;}
+  .gameover button{padding:12px 30px;background:#c43838;color:#fff;border:3px solid #0d0a1a;
+    font-family:'GalmuriBold',monospace;font-size:16px;box-shadow:4px 4px 0 #0d0a1a;cursor:pointer;}
+  .gameover button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #0d0a1a;}
+
+  .tree{position:absolute;height:280px;width:auto;bottom:20px;z-index:1;
+    filter:drop-shadow(0 4px 6px rgba(0,0,0,.6));}
+  .tree-l{left:1%;transform:scaleX(-1);}
+  .tree-r{right:1%;}
+  .puddle{position:absolute;width:140px;height:auto;z-index:1;opacity:.85;
+    filter:drop-shadow(0 0 6px rgba(80,120,255,.4));}
+  .puddle-1{bottom:18px;left:34%;}
+  .puddle-2{bottom:8px;right:38%;width:110px;}
+
+  .speech{
+    position:absolute;background:#fff;color:#1a1530;
+    padding:10px 14px;font-size:13px;line-height:1.4;
+    border:3px solid #1a1530;
+    box-shadow:4px 4px 0 #0d0a1a;
+    max-width:200px;
+  }
+  .speech::after{
+    content:'';position:absolute;width:0;height:0;
+    border:10px solid transparent;
+  }
+  .speech-main{top:60px;left:18%;}
+  .speech-main::after{bottom:-20px;left:30px;border-top-color:#1a1530;}
+  .speech-couple{font-size:11px;padding:6px 10px;background:#fff8e0;}
+  .speech-c1{bottom:230px;left:5%;}
+  .speech-c1::after{bottom:-16px;left:20px;border-top-color:#1a1530;border-width:8px;}
+  .speech-c2{bottom:290px;right:5%;}
+  .speech-c2::after{bottom:-16px;left:60px;border-top-color:#1a1530;border-width:8px;}
+
+  .shake{animation:shake .5s;}
+  @keyframes shake{
+    0%,100%{transform:translate(0,0);}
+    20%{transform:translate(-6px,2px);}
+    40%{transform:translate(5px,-3px);}
+    60%{transform:translate(-4px,4px);}
+    80%{transform:translate(3px,-2px);}
+  }
+
+  /* ===== Right panel ===== */
+  .record-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #3a2f5a;}
+  .record-row:last-child{border-bottom:none;}
+  .record-name{flex:1;font-size:13px;color:#c8b8e8;}
+  .record-val{font-family:'GalmuriBold',monospace;color:#fff;font-size:14px;}
+  .record-icon{width:24px;text-align:center;font-size:16px;}
+  .full-record-btn{
+    display:block;width:100%;margin-top:12px;padding:8px;
+    border:2px solid #c43838;color:#ff6868;
+    background:rgba(60,10,20,.4);
+    font-family:'GalmuriBold',monospace;font-size:13px;
+  }
+  .full-record-btn:hover{background:rgba(196,56,56,.3);color:#fff;}
+
+  /* Radar */
+  .radar-wrap{margin-top:14px;}
+  .radar{
+    position:relative;width:180px;height:180px;margin:8px auto 4px;
+    border-radius:50%;
+    background:radial-gradient(circle,#1a3a2a 0%,#0a1a14 70%);
+    border:3px solid #3a8a5a;
+    overflow:hidden;
+  }
+  .radar::before,.radar::after{
+    content:'';position:absolute;background:#3a8a5a;
+  }
+  .radar::before{left:50%;top:0;bottom:0;width:1px;}
+  .radar::after{top:50%;left:0;right:0;height:1px;}
+  .radar .ring{
+    position:absolute;border:1px solid #3a8a5a;border-radius:50%;
+    top:50%;left:50%;transform:translate(-50%,-50%);
+  }
+  .radar .ring.r1{width:60%;height:60%;}
+  .radar .ring.r2{width:30%;height:30%;}
+  .sweep{
+    position:absolute;inset:0;
+    background:conic-gradient(from 0deg,rgba(80,255,150,.5) 0deg,rgba(80,255,150,0) 60deg,transparent 360deg);
+    animation:sweep 3s linear infinite;
+    border-radius:50%;
+  }
+  @keyframes sweep{to{transform:rotate(360deg);}}
+  .blip{
+    position:absolute;width:10px;height:10px;background:#ff4848;
+    border-radius:50%;box-shadow:0 0 8px #ff4848;
+    transform:translate(-50%,-50%);
+    animation:blip 1.5s infinite;
+  }
+  @keyframes blip{0%,100%{opacity:.3;}50%{opacity:1;}}
+  .radar-info{display:flex;justify-content:space-between;font-size:11px;color:#8aa8a0;padding:0 4px;}
+
+  /* ===== Action buttons ===== */
+  .actions{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;
+  }
+  .act{
+    padding:18px 12px;text-align:center;
+    border:3px solid #0d0a1a;
     box-shadow:
-      inset 0 0 0 1px #fff,
-      0 0 0 1px #fff;
+      inset 0 0 0 2px rgba(255,255,255,.15),
+      inset 0 -6px 0 rgba(0,0,0,.35),
+      4px 4px 0 #0d0a1a;
+    transition:transform .08s;
+    font-family:'GalmuriBold',monospace;
+  }
+  .act:hover{filter:brightness(1.15);}
+  .act:active{transform:translate(2px,2px);box-shadow:inset 0 0 0 2px rgba(255,255,255,.15),inset 0 -3px 0 rgba(0,0,0,.35),2px 2px 0 #0d0a1a;}
+  .act .ico{font-size:30px;display:block;margin-bottom:8px;}
+  .act .label{font-size:18px;color:#fff;letter-spacing:2px;}
+  .act .sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:4px;letter-spacing:1px;}
+  .act-curse {background:linear-gradient(180deg,#d04848,#8a2828);}
+  .act-rain  {background:linear-gradient(180deg,#5a8fc7,#2a5a8a);}
+  .act-scan  {background:linear-gradient(180deg,#a05fc4,#5a2a8a);}
+  .act-power {background:linear-gradient(180deg,#4a3a6a,#2a1f4a);}
+  .act-book  {background:linear-gradient(180deg,#7a4a9a,#3a2a6a);}
+
+  /* ===== Footer ===== */
+  footer{
+    margin-top:22px;padding:18px 22px;
+    display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;
+    background:rgba(13,10,26,.9);
+    border:3px solid #5a4a8a;
+    box-shadow:0 0 0 3px #0d0a1a, inset 0 0 0 1px #8a7ac0;
+  }
+  .mascot{display:flex;align-items:center;gap:10px;}
+  .mascot .bubble{
+    background:#fff;color:#1a1530;padding:6px 10px;font-size:12px;
+    border:2px solid #1a1530;position:relative;
+  }
+  .footer-text{text-align:center;font-size:13px;color:#c8b8e8;line-height:1.7;}
+  .footer-text .em{color:#a05fc4;}
+
+  /* ===== Rain ===== */
+  .rain-layer{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+  .drop{
+    position:absolute;width:2px;background:linear-gradient(180deg,transparent,#7a9fcf);
+    top:-30px;animation:fall linear infinite;opacity:.5;
+  }
+  @keyframes fall{to{transform:translateY(110vh);}}
+
+  /* ===== Lightning flash overlay ===== */
+  .flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:10;}
+  .flash.go{animation:flash .35s;}
+  @keyframes flash{
+    0%{opacity:0;}10%{opacity:.7;}20%{opacity:.1;}30%{opacity:.5;}100%{opacity:0;}
   }
 
-  .controls input:focus {
-    border-color: var(--accent-green);
-    box-shadow:
-      inset 0 0 0 1px #fff,
-      0 0 0 1px #c1ffe6;
+  /* ===== Modal ===== */
+  .modal-mask{
+    position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;
+    display:none;align-items:center;justify-content:center;
   }
-
-  .controls button {
-    margin-top: 4px;
-    padding: 9px 10px;
-    border: 0;
-    border-radius: 0;
-    background: var(--accent-green);
-    color: #fff;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    box-shadow:
-      0 0 0 2px #edfff7,
-      0 4px 0 0 #144734;
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  .modal-mask.show{display:flex;}
+  .modal{
+    width:520px;max-width:92%;padding:28px;
+    background:#1a1530;border:4px solid #8a7ac0;
+    box-shadow:0 0 0 4px #0d0a1a, inset 0 0 0 1px #c8b8e8;
+    text-align:center;
   }
-
-  .controls button:hover {
-    transform: translate(-1px, -1px);
-    box-shadow:
-      0 0 0 2px #edfff7,
-      0 5px 0 0 #144734;
+  .modal h3{font-family:'GalmuriBold',monospace;color:#ff6868;font-size:22px;margin-bottom:14px;letter-spacing:3px;}
+  .modal p{color:#e8e0ff;font-size:15px;line-height:1.7;margin-bottom:20px;min-height:80px;}
+  .modal button{
+    padding:10px 24px;background:#c43838;color:#fff;
+    font-family:'GalmuriBold',monospace;border:3px solid #0d0a1a;
+    box-shadow:4px 4px 0 #0d0a1a;
   }
+  .modal button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #0d0a1a;}
 
-  .controls button:active {
-    transform: translate(0, 2px);
-    box-shadow:
-      0 0 0 2px #edfff7,
-      0 1px 0 0 #144734;
+  /* ===== Toast ===== */
+  .toast-zone{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:40;display:flex;flex-direction:column;gap:8px;align-items:center;}
+  .toast{
+    background:#1a1530;color:#fff;border:3px solid #ff6868;
+    padding:10px 18px;font-family:'GalmuriBold',monospace;font-size:14px;letter-spacing:2px;
+    box-shadow:4px 4px 0 #0d0a1a;
+    animation:toast 2.4s forwards;
   }
-
-  .week-note {
-    margin-top: 4px;
-    font-size: 0.75rem;
-    color: var(--text-soft);
-  }
-
-  .change-goal {
-    padding: 9px 14px;
-    border: 0;
-    border-radius: 0;
-    background: var(--bg-chip);
-    color: var(--border-strong);
-    font-size: 0.78rem;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    box-shadow:
-      0 0 0 2px #effff8,
-      0 4px 0 0 #1f8062;
-    display: none;
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
-  }
-
-  .change-goal.visible {
-    display: inline-flex;
-  }
-
-  .change-goal:hover {
-    transform: translate(-1px, -1px);
-    box-shadow:
-      0 0 0 2px #effff8,
-      0 5px 0 0 #1f8062;
-  }
-
-  .change-goal:active {
-    transform: translate(0, 2px);
-    box-shadow:
-      0 0 0 2px #effff8,
-      0 1px 0 0 #1f8062;
-  }
-
-.goal-board {
-  width: min(900px, 100%);
-  background: var(--bg-panel);
-    border-radius: 0;
-    padding: 16px 18px 20px;
-    border: 3px solid var(--border-strong);
-    box-shadow:
-      0 0 0 2px #e6fff4,
-      0 6px 0 0 #1d5a43;
-    transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
-  }
-
-  .goal-board.on-track {
-    border-color: #52c694;
-    box-shadow:
-      0 0 0 2px #e1fff3,
-      0 7px 0 0 #1f684d;
-    transform: translateY(-1px);
-  }
-
-  .goal-board.over-goal {
-    border-color: var(--accent-red);
-    box-shadow:
-      0 0 0 2px #d4faff,
-      0 7px 0 0 #127a8c;
-    transform: translateY(-1px);
-  }
-
-  .goal-status {
-    font-size: 0.86rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    padding: 6px 8px;
-    border-radius: 0;
-    background: #f1fff9;
-    border: 2px solid #c0f3de;
-    color: var(--text-main);
-  }
-
-  .summary-board {
-    width: min(900px, 100%);
-    background: var(--bg-panel);
-    border: 3px solid var(--border-strong);
-    border-radius: 0;
-    padding: 14px 18px 18px;
-    box-shadow:
-      0 0 0 2px #e6fff4,
-      0 5px 0 0 #1d5a43;
-  }
-
-  .summary-board h2 {
-    margin: 0 0 12px;
-    font-size: 0.78rem;
-    color: var(--text-main);
-    letter-spacing: 0.04em;
-  }
-
-  .summary-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .summary-box {
-    flex: 1 1 200px;
-    background: #f0fff6;
-    border: 2px solid #9fdcc1;
-    box-shadow:
-      0 0 0 1px #fff,
-      0 3px 0 0 #5a9e83;
-    padding: 10px;
-  }
-
-  .summary-title {
-    margin: 0 0 6px;
-    font-size: 0.65rem;
-    color: var(--text-soft);
-  }
-
-  .summary-value {
-    margin: 0;
-    font-size: 0.75rem;
-  color: var(--text-main);
-}
-
-.summary-board {
-  width: min(900px, 100%);
-  background: var(--bg-panel);
-  border-radius: 0;
-  padding: 16px 18px 20px;
-  border: 3px solid var(--border-strong);
-  box-shadow:
-    0 0 0 2px #e6fff4,
-    0 5px 0 0 #1d5a43;
-}
-
-.summary-board h2 {
-  margin: 0 0 12px;
-  font-size: 0.78rem;
-  color: var(--text-main);
-  letter-spacing: 0.04em;
-}
-
-.summary-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.summary-box {
-  flex: 1 1 200px;
-  background: #f0fff6;
-  border: 2px solid #9fdcc1;
-  box-shadow:
-    0 0 0 1px #fff,
-    0 3px 0 0 #5a9e83;
-  padding: 10px;
-}
-
-.summary-title {
-  margin: 0 0 6px;
-  font-size: 0.65rem;
-  color: var(--text-soft);
-}
-
-.summary-value {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--text-main);
-}
-
-.summary-reset {
-  margin-left: 8px;
-  padding: 4px 6px;
-  border: 0;
-  border-radius: 0;
-  font-size: 0.55rem;
-  background: #b5f0dd;
-  color: #134631;
-  cursor: pointer;
-  box-shadow:
-    0 0 0 2px #e4fff5,
-    0 2px 0 0 #1f6a4c;
-}
-
-.summary-reset:active {
-  transform: translateY(1px);
-  box-shadow:
-    0 0 0 2px #e4fff5,
-    0 1px 0 0 #1f6a4c;
-}
-
-.soju-grid {
-  display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
-    gap: 14px 10px;
-    justify-items: center;
-    min-height: 120px;
-  }
-
-  .soju-grid:empty::after {
-    content: "목표 병 수를 정하면 네모난 병이 줄줄이 생겨요 (•ᴗ•)و";
-    grid-column: 1 / -1;
-    color: var(--text-soft);
-    font-size: 0.78rem;
-    text-align: center;
-  }
-
-  .soju {
-    position: relative;
-    --large-height: 82px;
-    --small-height: 26px;
-    width: 72px;
-    height: 150px;
-    padding-bottom: 26px;
-    cursor: pointer;
-    transition: transform 0.08s ease;
-  }
-
-  .soju:hover {
-    transform: translateY(-2px);
-  }
-
-  .soju.drained {
-    filter: grayscale(0.2);
-  }
-
-  .cylinder {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    --ellipse-height: 0;
-    background: #4cbf92;
-    border-radius: 4px;
-    border: 3px solid #287457;
-    box-shadow:
-      inset 0 0 0 2px #8ff2c8,
-      0 0 0 2px #e1fff3;
-  }
-
-  .cylinder::before,
-  .cylinder::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-  }
-
-  .cylinder::before {
-    top: 4px;
-    left: 4px;
-    right: 10px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.4);
-  }
-
-  .cylinder::after {
-    bottom: 4px;
-    left: 6px;
-    right: 6px;
-    height: 4px;
-    background: rgba(0, 0, 0, 0.12);
-  }
-
-  .cylinder-large {
-    --diameter: 52px;
-    --height: var(--large-height);
-    bottom: 22px;
-    width: var(--diameter);
-    height: var(--height);
-  }
-
-  .cylinder-small {
-    --diameter: 26px;
-    --height: var(--small-height);
-    bottom: calc(var(--large-height) + 24px);
-    width: calc(var(--diameter) * 0.77);
-    height: calc(var(--height) * 1.1);
-    background: #3da37c;
-    margin-bottom: 0;
-    border-bottom: none;
-    box-shadow:
-      inset 0 0 0 2px #7be9c4,
-      0 -2px 0 0 #7be9c4,
-      0 0 0 2px #e1fff3;
-  }
-
-  .cylinder-small::after {
-    display: none;
-  }
-
-  .liquid {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 26px;
-    width: 44px;
-    height: calc(var(--fill-level, 1) * 66px);
-    background: linear-gradient(180deg, rgba(230, 251, 255, 0.8), rgba(100, 193, 212, 0.65), rgba(63, 160, 184, 0.7));
-    border-radius: 3px;
-    box-shadow:
-      inset 0 0 0 2px rgba(0, 0, 0, 0.12),
-      inset 0 2px 0 0 rgba(255, 255, 255, 0.5);
-    z-index: 1;
-    overflow: hidden;
-  }
-
-  .liquid::before {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 3px;
-    right: 14px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.7);
-  }
-
-  .soju.drained .liquid {
-    height: 0;
-    box-shadow: none;
-  }
-
-  .bottle-label {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    min-height: 22px;
-    padding: 4px 3px 5px;
-    background: #f0fff6;
-    border-radius: 0;
-    border: 2px solid #9fdcc1;
-    box-shadow:
-      0 0 0 1px #fff,
-      0 2px 0 0 #5a9e83;
-    font-size: 0.5rem;
-    color: var(--text-main);
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    text-align: center;
-    transition: opacity 0.1s ease;
-  }
-
-  .bottle-label.empty {
-    opacity: 0;
-  }
-
-  .bottle-label .label-day {
-    font-weight: 800;
-    font-size: 0.7rem;
-    color: #116047;
-  }
-
-  .bottle-label .label-date {
-    font-size: 0.32rem;
-    color: #2c6b55;
-  }
-
-  .bottle-label .label-memo {
-    font-size: 0.62rem;
-    color: #2a7258;
-    line-height: 1.15;
-    word-break: keep-all;
-  }
-
-  .soju.over-goal {
-    box-shadow: 0 0 0 2px #8bdef0;
-  }
-
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(4, 45, 39, 0.65);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.16s ease;
-  }
-
-  .modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal {
-    background: #effff7;
-    border-radius: 0;
-    padding: 18px 16px 16px;
-    width: min(340px, 100%);
-    border: 3px solid var(--border-strong);
-    box-shadow:
-      0 0 0 2px #e6fff4,
-      0 8px 0 0 #1d5a43;
-  }
-
-  .modal h2 {
-    margin: 0 0 10px;
-    font-size: 0.9rem;
-    color: var(--border-strong);
-  }
-
-  .modal label {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 0.78rem;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: var(--text-main);
-  }
-
-  .modal input,
-  .modal textarea {
-    padding: 8px 10px;
-    border-radius: 0;
-    border: 2px solid #bff1dc;
-    font-size: 0.85rem;
-    font-family: inherit;
-    background: #ffffff;
-  }
-
-  .modal textarea {
-    resize: vertical;
-    min-height: 70px;
-  }
-
-  .modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .modal-buttons button {
-    padding: 7px 12px;
-    border-radius: 0;
-    border: 0;
-    font-weight: 700;
-    font-size: 0.78rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  .modal-buttons .cancel {
-    background: #e0f7f0;
-    color: var(--text-main);
-    box-shadow:
-      0 0 0 2px #edfff7,
-      0 3px 0 0 #2b7460;
-  }
-
-  .modal-buttons .delete {
-    background: #ffe5e5;
-    color: #7a1e1e;
-    box-shadow:
-      0 0 0 2px #fff7f7,
-      0 3px 0 0 #a84444;
-    display: none;
-  }
-
-  .modal-buttons .submit {
-    background: var(--accent-green);
-    color: #fff;
-    box-shadow:
-      0 0 0 2px #edfff7,
-      0 3px 0 0 #144734;
-  }
-
-  .modal-buttons .cancel:active,
-  .modal-buttons .delete:active,
-  .modal-buttons .submit:active {
-    transform: translateY(1px);
-    box-shadow:
-      0 0 0 2px #edfff7,
-      0 1px 0 0 rgba(0, 0, 0, 0.25);
-  }
-
-  @media (max-width: 640px) {
-    body {
-      padding-top: 24px;
-    }
-
-    .top-area {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-    }
-
-    .change-goal {
-      align-self: flex-end;
-    }
+  @keyframes toast{
+    0%{opacity:0;transform:translateY(-10px);}
+    10%,80%{opacity:1;transform:translateY(0);}
+    100%{opacity:0;transform:translateY(-10px);}
   }
 </style>
 </head>
 <body>
-  <div class="top-area">
-    <header>
-      <h1 class="title-glitch">
-        <span>금</span>
-        <span>주</span>
-        <span>해</span>
-        <span>보</span>
-        <span>자</span>
-      </h1>
-      <div class="controls" id="goal-controls">
-        <label for="weekly-goal">이번주 목표 제한 주량 (병)</label>
-        <input
-          type="number"
-          id="weekly-goal"
-          name="weekly-goal"
-          min="0"
-          step="1"
-          inputmode="numeric"
-          placeholder="예: 3"
-        />
-        <button type="button" id="register-goal">목표 등록</button>
-        <p class="week-note">한 주는 일요일 시작, 월요일 종료 기준입니다.</p>
-      </div>
-    </header>
-    <button type="button" id="change-goal" class="change-goal">주량 변경</button>
+
+<div class="rain-layer" id="rain"></div>
+<div class="flash" id="flash"></div>
+
+<div class="wrap">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <div class="ph" style="width:36px;height:36px;font-size:9px;">cloud</div>
+      솔로 지옥 프로젝트 <span class="heart">💔</span>
+    </div>
+    <nav>
+      <a href="#">저주 소개</a>
+      <a href="#">저주 통계</a>
+      <a href="#">랭킹</a>
+      <a href="#">업데이트</a>
+      <a href="#">커뮤니티</a>
+      <a href="#">굿즈샵</a>
+    </nav>
+    <div class="user-badge">💀 나는 솔로 Lv.99</div>
+  </header>
+
+  <!-- ===== TITLE ===== -->
+  <div class="title-wrap">
+    <img class="lightning-deco l" src="assets/lightning_yellow.png" alt="">
+    <h1 class="title">연애 못 한 자의 저주</h1>
+    <img class="lightning-deco r" src="assets/lightning_blue.png" alt="">
+    <p class="subtitle"><span class="flame">🔥</span>비와라, 나무도 다 꺾여라, 커플 다 헤어져라<span class="flame">🔥</span></p>
   </div>
 
-  <section class="goal-board" aria-live="polite">
-    <p class="goal-status" id="goal-status">목표 주량을 입력하고 등록해 주세요.</p>
-    <div id="soju-grid" class="soju-grid"></div>
-  </section>
+  <!-- ===== MAIN GRID ===== -->
+  <div class="grid">
 
-  <section class="summary-board" aria-live="polite">
-    <h2>누적 통계</h2>
-    <div class="summary-row">
-      <div class="summary-box">
-        <p class="summary-title">이번 달</p>
-        <p class="summary-value">
-          <span id="month-bottles">0</span>병 /
-          <span id="month-amount">0</span>원
-          <button type="button" class="summary-reset" id="reset-month">리셋</button>
-        </p>
-      </div>
-      <div class="summary-box">
-        <p class="summary-title">올해 전체</p>
-        <p class="summary-value">
-          <span id="year-bottles">0</span>병 /
-          <span id="year-amount">0</span>원
-          <button type="button" class="summary-reset" id="reset-year">리셋</button>
-        </p>
-      </div>
-    </div>
-  </section>
+    <!-- LEFT -->
+    <aside>
+      <div class="pf">
+        <div class="panel-title"><span class="skull">💀</span>STATUS<span class="skull">💀</span></div>
 
-  <template id="soju-template">
-    <div class="soju" role="img" aria-label="소주 병" data-fill="1">
-      <div class="cylinder cylinder-large"></div>
-      <div class="liquid"></div>
-      <div class="cylinder cylinder-small"></div>
-      <div class="bottle-label empty">
-        <span class="label-day"></span>
-        <span class="label-date"></span>
-        <span class="label-memo"></span>
-      </div>
-    </div>
-  </template>
-
-  <div class="modal-overlay" id="log-modal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <h2 id="modal-title">마신 기록 남기기</h2>
-      <form id="log-form">
-        <label for="log-date">
-          마신 날짜
-          <input type="date" id="log-date" required />
-        </label>
-        <label for="log-memo">
-          메모 (최대 8자)
-          <textarea id="log-memo" maxlength="8" placeholder="간단히 8자 이내로"></textarea>
-        </label>
-        <label for="log-price">
-          그날 술값 (원)
-          <input type="number" id="log-price" min="0" step="100" placeholder="예: 12000" />
-        </label>
-        <div class="modal-buttons">
-          <button type="button" class="cancel" id="cancel-log">취소</button>
-          <button type="button" class="delete" id="delete-log">삭제</button>
-          <button type="submit" class="submit">기록 완료</button>
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-icon">😡</span>
+            <span class="stat-name">분노 게이지</span>
+            <span class="stat-val" id="angerVal" style="color:#ff6868;">92%</span>
+          </div>
+          <div class="bar anger"><i id="angerBar" style="width:92%;"></i></div>
         </div>
-      </form>
-    </div>
+
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-icon">👻</span>
+            <span class="stat-name">솔로력</span>
+            <span class="stat-val" style="color:#88c8ff;">Lv.99</span>
+          </div>
+          <div class="bar solo"><i style="width:100%;"></i></div>
+          <div class="stat-note max">(MAX) 인생은 혼자다...</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-icon">💔</span>
+            <span class="stat-name">커플 탐지율</span>
+            <span class="stat-val" id="detectVal" style="color:#d088ff;">87%</span>
+          </div>
+          <div class="bar detect"><i id="detectBar" style="width:87%;"></i></div>
+          <div class="stat-note">근처 커플 반응 감지 중...</div>
+        </div>
+
+        <div class="profile">
+          <div>🌑 <span class="label">신장:</span> 185cm  <span class="label">체중:</span> 80kg</div>
+          <div><span class="label">특징:</span> 커플 보면 자동 분노 상승</div>
+        </div>
+      </div>
+
+      <div class="sign-wood">
+        <img src="assets/sign_wood.png" alt="">
+        <div class="sign-text">
+          연애 금지구역
+          <span class="skull">☠</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER STAGE -->
+    <section class="stage" id="stage">
+      <img class="tree tree-l" src="assets/tree_dead_1.png" alt="">
+      <img class="tree tree-r" src="assets/tree_dead_2.png" alt="">
+      <img class="puddle puddle-1" src="assets/puddle.png" alt="">
+      <img class="puddle puddle-2" src="assets/puddle.png" alt="">
+
+      <div class="hud">
+        <div class="hud-box">WAVE <span class="v" id="hudWave">1</span></div>
+        <div class="hud-box">SCORE <span class="v" id="hudScore">0</span></div>
+        <div class="hud-box combo" id="hudComboBox">COMBO <span class="v" id="hudCombo">x1</span></div>
+      </div>
+      <div class="char-area">
+
+        <div class="speech speech-main" id="speechMain">
+          오늘도<br>커플들은...<br>모두 박살이다!!!
+        </div>
+        <div id="coupleField"></div>
+
+        <img class="char-img" src="assets/char_main.png" alt="저주받은 솔로">
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <aside>
+      <div class="pf">
+        <div class="panel-title"><span class="skull">☠</span>오늘의 저주 기록<span class="skull">☠</span></div>
+
+        <div class="record-row"><span class="record-icon">🌧️</span><span class="record-name">비 내린 시간</span><span class="record-val" id="rainTime">03:27:14</span></div>
+        <div class="record-row"><span class="record-icon">🌳</span><span class="record-name">꺾은 나무</span><span class="record-val"><span id="trees">27</span> 그루</span></div>
+        <div class="record-row"><span class="record-icon">💔</span><span class="record-name">갈라놓은 커플</span><span class="record-val"><span id="couples">14</span> 쌍</span></div>
+        <div class="record-row"><span class="record-icon">🔮</span><span class="record-name">사용한 저주 마력</span><span class="record-val"><span id="power">666</span>%</span></div>
+
+        <button class="full-record-btn">전체 기록 보기  ▶</button>
+      </div>
+
+      <div class="pf radar-wrap">
+        <div class="panel-title" style="color:#ff8888;">실시간 커플 탐지기</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+          <div style="font-size:12px;color:#c8b8e8;padding-top:30px;">탐지 중...</div>
+          <div class="radar" id="radar">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="sweep"></div>
+          </div>
+        </div>
+        <div class="radar-info"><span></span><span>반경 50m</span></div>
+      </div>
+    </aside>
+
   </div>
-  
-  <script>
-    const goalInput = document.getElementById("weekly-goal");
-    const registerButton = document.getElementById("register-goal");
-    const sojuGrid = document.getElementById("soju-grid");
-    const goalStatus = document.getElementById("goal-status");
-    const sojuTemplate = document.getElementById("soju-template");
-    const goalBoard = document.querySelector(".goal-board");
-    const logModal = document.getElementById("log-modal");
-    const logForm = document.getElementById("log-form");
-    const logDateInput = document.getElementById("log-date");
-    const logMemoInput = document.getElementById("log-memo");
-    const logPriceInput = document.getElementById("log-price");
-    const cancelLogButton = document.getElementById("cancel-log");
-    const deleteLogButton = document.getElementById("delete-log");
-    const changeGoalButton = document.getElementById("change-goal");
-    const controlsPanel = document.getElementById("goal-controls");
-    const summaryMonthBottles = document.getElementById("month-bottles");
-    const summaryMonthAmount = document.getElementById("month-amount");
-    const summaryYearBottles = document.getElementById("year-bottles");
-    const summaryYearAmount = document.getElementById("year-amount");
-    const resetMonthButton = document.getElementById("reset-month");
-    const resetYearButton = document.getElementById("reset-year");
 
-    const WEEKLY_STORE_KEY = "weeklyStore";
-    const LAST_WEEK_KEY = "lastWeekKey";
-    const LOG_STORE_KEY = "sojuLogs";
-    const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+  <!-- ===== ACTION BUTTONS ===== -->
+  <div class="actions">
+    <button class="act act-curse" data-act="curse">
+      <span class="ico">💔</span>
+      <span class="label">저주 시작</span>
+      <span class="cd"></span>
+      <div class="sub">(분노 폭발!)</div>
+    </button>
+    <button class="act act-rain" data-act="rain">
+      <span class="ico">🌧️</span>
+      <span class="label">비 더 내려</span>
+      <span class="cd"></span>
+      <div class="sub">(강수량 +100%)</div>
+    </button>
+    <button class="act act-scan" data-act="scan">
+      <span class="ico">🎯</span>
+      <span class="label">커플 감지</span>
+      <span class="cd"></span>
+      <div class="sub">(근처 커플 스캔!)</div>
+    </button>
+    <button class="act act-book" data-act="book">
+      <span class="ico">📖</span>
+      <span class="label">솔로 백과</span>
+      <span class="cd"></span>
+      <div class="sub">(저주 지식 모음)</div>
+    </button>
+  </div>
 
-    let weeklyStore = loadWeeklyStore();
-    const todayISO = getTodayISO();
-    const currentWeekKey = getWeekKeyFromISO(todayISO);
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="mascot">
+      <img src="assets/mascot_ghost.png" alt="" style="width:60px;height:60px;object-fit:contain;">
+      <div class="bubble">외롭지만<br>강력하다!</div>
+    </div>
+    <div class="footer-text">
+      ※ 본 사이트는 솔로의 분노를 건전한 픽셀 감성으로 해소하기 위해 제작되었습니다.<br>
+      <span class="em">🔮 커플은 잠시, 저주는 영원히. 🔮</span>
+    </div>
+    <div class="mascot">
+      <div class="bubble">악의는 없어요<br>(진짜예요)</div>
+      <img src="assets/mascot_demon.png" alt="" style="width:60px;height:60px;object-fit:contain;">
+    </div>
+  </footer>
 
-    ensureWeekExists();
-    ensureWeekRollover();
+</div>
 
-    let currentWeek = weeklyStore[currentWeekKey];
-    ensureWeekLogIds();
+<!-- ===== MODAL ===== -->
+<div class="modal-mask" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle">📖 솔로 백과</h3>
+    <p id="modalBody">로딩 중...</p>
+    <button onclick="closeModal()">닫기</button>
+  </div>
+</div>
 
-    let consumedCount = currentWeek.logs.length;
-    let selectedBottleIndex = null;
-    let editingExisting = false;
+<!-- ===== TOAST ZONE ===== -->
+<div class="toast-zone" id="toastZone"></div>
 
-    renderWeekState();
-    updateSummaryFromLogs();
+<!-- ===== GAME OVER ===== -->
+<div class="gameover" id="gameover">
+  <div class="panel">
+    <h2>분노 폭발</h2>
+    <p>커플이 너무 많아 분노 게이지가 폭발했습니다.<br>
+       최종 스코어: <span id="finalScore" style="color:#ffeb70;">0</span> · 최고 콤보 <span id="finalCombo" style="color:#ff8888;">x1</span><br>
+       도달 웨이브: <span id="finalWave" style="color:#88c8ff;">1</span></p>
+    <button onclick="restartGame()">다시 저주하기</button>
+  </div>
+</div>
 
-    registerButton.addEventListener("click", handleRegisterGoal);
-    changeGoalButton.addEventListener("click", handleChangeGoal);
-    sojuGrid.addEventListener("click", handleBottleClick);
-    logForm.addEventListener("submit", handleLogSubmit);
-    cancelLogButton.addEventListener("click", closeModal);
-    logModal.addEventListener("click", (event) => {
-      if (event.target === logModal) closeModal();
-    });
-    resetMonthButton.addEventListener("click", handleResetMonth);
-    resetYearButton.addEventListener("click", handleResetYear);
-    deleteLogButton.addEventListener("click", handleDeleteLog);
+<script>
+/* ============================================
+   상태
+============================================ */
+const state = {
+  anger:50, detect:87, rainPower:1, scanBoost:false,
+  trees:27, couples:14, power:666,
+  rainSeconds: 3*3600 + 27*60 + 14,
+  // game
+  wave:1, score:0, combo:1, maxCombo:1, lastBreakAt:0,
+  running:true, gameOver:false,
+  spawnTimer:null, comboTimer:null
+};
 
-    function loadWeeklyStore() {
-      try {
-        const raw = localStorage.getItem(WEEKLY_STORE_KEY);
-        return raw ? JSON.parse(raw) : {};
-      } catch (_) {
-        return {};
-      }
+/* ============================================
+   비 내린 시간 (실시간 카운트)
+============================================ */
+const rainTimeEl = document.getElementById('rainTime');
+function pad(n){return String(n).padStart(2,'0');}
+function fmtTime(s){
+  const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
+  return `${pad(h)}:${pad(m)}:${pad(sec)}`;
+}
+setInterval(()=>{
+  state.rainSeconds += state.rainPower;
+  rainTimeEl.textContent = fmtTime(state.rainSeconds);
+},1000);
+
+/* ============================================
+   비 (Rain particles)
+============================================ */
+const rainLayer = document.getElementById('rain');
+function spawnRain(count=120){
+  rainLayer.innerHTML='';
+  for(let i=0;i<count;i++){
+    const d=document.createElement('span');
+    d.className='drop';
+    d.style.left = Math.random()*100 + '%';
+    const len = 12 + Math.random()*30;
+    d.style.height = len + 'px';
+    d.style.animationDuration = (0.6 + Math.random()*0.8) + 's';
+    d.style.animationDelay = (Math.random()*-2) + 's';
+    d.style.opacity = .3 + Math.random()*.5;
+    rainLayer.appendChild(d);
+  }
+}
+spawnRain(140);
+
+/* ============================================
+   레이더 블립
+============================================ */
+const radar = document.getElementById('radar');
+function spawnBlips(n=4){
+  radar.querySelectorAll('.blip').forEach(b=>b.remove());
+  for(let i=0;i<n;i++){
+    const b = document.createElement('span');
+    b.className='blip';
+    // 원 안쪽에 랜덤 배치
+    const angle = Math.random()*Math.PI*2;
+    const radius = 15 + Math.random()*70; // %
+    const x = 50 + Math.cos(angle)*radius*0.45;
+    const y = 50 + Math.sin(angle)*radius*0.45;
+    b.style.left = x + '%';
+    b.style.top  = y + '%';
+    b.style.animationDelay = (Math.random()*1.5) + 's';
+    radar.appendChild(b);
+  }
+}
+spawnBlips(4);
+setInterval(()=>spawnBlips(state.scanBoost?6:4), 4500);
+
+/* ============================================
+   랜덤 번개
+============================================ */
+const flash = document.getElementById('flash');
+function flashLightning(){
+  flash.classList.remove('go');
+  void flash.offsetWidth; // reflow
+  flash.classList.add('go');
+}
+function scheduleLightning(){
+  const wait = 4000 + Math.random()*8000;
+  setTimeout(()=>{flashLightning(); scheduleLightning();}, wait);
+}
+scheduleLightning();
+
+/* ============================================
+   토스트
+============================================ */
+function toast(msg){
+  const t = document.createElement('div');
+  t.className='toast';
+  t.textContent = msg;
+  document.getElementById('toastZone').appendChild(t);
+  setTimeout(()=>t.remove(), 2400);
+}
+
+/* ============================================
+   상태 업데이트
+============================================ */
+const angerBar = document.getElementById('angerBar');
+const angerVal = document.getElementById('angerVal');
+const detectBar = document.getElementById('detectBar');
+const detectVal = document.getElementById('detectVal');
+const trees = document.getElementById('trees');
+const couples = document.getElementById('couples');
+const power = document.getElementById('power');
+
+function setAnger(v){
+  state.anger = Math.max(0, Math.min(100, v));
+  angerBar.style.width = state.anger + '%';
+  angerVal.textContent = Math.round(state.anger) + '%';
+}
+function setDetect(v){
+  state.detect = Math.max(0, Math.min(100, v));
+  detectBar.style.width = state.detect + '%';
+  detectVal.textContent = Math.round(state.detect) + '%';
+}
+
+// 분노는 화면의 행복 커플 수에 비례 (많을수록 솟구침)
+setInterval(()=>{
+  if(state.gameOver) return;
+  const happyCount = document.querySelectorAll('.couple-img.happy').length;
+  // base 30 + happyCount*8, 자연감쇠 -2
+  const target = Math.min(100, 30 + happyCount*8);
+  const next = state.anger + (target - state.anger)*0.25 - 1;
+  setAnger(next);
+  // overdrive 표시
+  angerBar.parentElement.classList.toggle('overdrive', state.anger >= 95);
+  // 100% 도달하면 게임오버 카운트
+  if(state.anger >= 99.5){
+    state._criticalSince = state._criticalSince || Date.now();
+    if(Date.now() - state._criticalSince > 3000) endGame();
+  } else {
+    state._criticalSince = null;
+  }
+},400);
+
+/* ============================================
+   대사 회전
+============================================ */
+const speeches = [
+  "오늘도<br>커플들은...<br>모두 박살이다!!!",
+  "어둠이여...<br>커플을<br>삼켜다오",
+  "사랑은<br>일시적,<br>저주는 영원",
+  "발렌타인?<br>그게<br>먹는건가",
+  "내 분노로<br>비를<br>만들어라",
+  "솔로가<br>최종<br>형태다"
+];
+let speechIdx=0;
+setInterval(()=>{
+  speechIdx=(speechIdx+1)%speeches.length;
+  document.getElementById('speechMain').innerHTML = speeches[speechIdx];
+},5000);
+
+/* ============================================
+   커플 스폰 / 도망
+============================================ */
+const coupleField = document.getElementById('coupleField');
+const RUN_TYPES = ['couple_run_1.png','couple_run_2.png','couple_run_3.png'];
+
+function rand(min,max){return min + Math.random()*(max-min);}
+function pickSide(){
+  // 좌 또는 우 (캐릭터 가운데 회피)
+  return Math.random() < 0.5 ? 'L' : 'R';
+}
+function randomSpot(){
+  const side = pickSide();
+  const xPct = side==='L' ? rand(3, 24) : rand(72, 92);
+  const bottomPx = rand(30, 260);
+  return {side, xPct, bottomPx};
+}
+function spawnHappyCouple(){
+  const {side, xPct, bottomPx} = randomSpot();
+  const img = document.createElement('img');
+  img.src = 'assets/couple_happy.png';
+  img.className = 'couple-img happy';
+  img.dataset.side = side;
+  img.style.left = xPct + '%';
+  img.style.bottom = bottomPx + 'px';
+  img.style.height = (95 + Math.random()*30) + 'px';
+  img.title = '클릭하면 저주!';
+  img.addEventListener('click', e=>{
+    e.stopPropagation();
+    breakCouple(img);
+  });
+  coupleField.appendChild(img);
+  // 하트 팝
+  const pop = document.createElement('div');
+  pop.className='happy-pop';
+  pop.textContent='💕';
+  pop.style.left = xPct + '%';
+  pop.style.bottom = (bottomPx+90) + 'px';
+  coupleField.appendChild(pop);
+  setTimeout(()=>pop.remove(), 1300);
+  requestAnimationFrame(()=>img.classList.add('in'));
+}
+
+/* 개별 커플 깨기 (클릭으로) */
+function breakCouple(img){
+  if(state.gameOver) return;
+  const now = Date.now();
+  if(now - state.lastBreakAt < 1500){
+    state.combo = Math.min(10, state.combo + 1);
+  } else {
+    state.combo = 1;
+  }
+  state.lastBreakAt = now;
+  state.maxCombo = Math.max(state.maxCombo, state.combo);
+
+  const gained = 10 * state.combo;
+  state.score += gained;
+  state.couples += 1;
+  couples.textContent = state.couples;
+  updateHUD();
+
+  // 떠오르는 점수
+  const fs = document.createElement('div');
+  fs.className = 'float-score' + (state.combo>=3?' combo':'');
+  fs.style.left = img.style.left;
+  fs.style.bottom = (parseFloat(img.style.bottom) + 100) + 'px';
+  fs.textContent = state.combo > 1 ? `+${gained}  ×${state.combo}` : `+${gained}`;
+  coupleField.appendChild(fs);
+  setTimeout(()=>fs.remove(), 1200);
+
+  cursifyCouple(img);
+
+  // 콤보 리셋 타이머 시각
+  clearTimeout(state.comboTimer);
+  state.comboTimer = setTimeout(()=>{
+    state.combo = 1;
+    updateHUD();
+  }, 1500);
+}
+
+function updateHUD(){
+  document.getElementById('hudWave').textContent = state.wave;
+  document.getElementById('hudScore').textContent = state.score;
+  document.getElementById('hudCombo').textContent = 'x' + state.combo;
+  document.getElementById('hudComboBox').classList.toggle('hot', state.combo >= 3);
+}
+function cursifyCouple(img){
+  // 행복 커플을 도망 커플로 교체 후 도망
+  const side = img.dataset.side || (parseFloat(img.style.left) < 50 ? 'L' : 'R');
+  const runSrc = 'assets/' + RUN_TYPES[Math.floor(Math.random()*RUN_TYPES.length)];
+  img.src = runSrc;
+  img.classList.remove('happy');
+  img.classList.add('fleeing');
+  // 약간 떨림 후 도망
+  setTimeout(()=>{
+    img.classList.add(side==='L' ? 'flee-l' : 'flee-r');
+  }, 300);
+  setTimeout(()=>img.remove(), 2200);
+}
+function spawnFleeingCouple(){
+  const {side, xPct, bottomPx} = randomSpot();
+  const img = document.createElement('img');
+  img.src = 'assets/' + RUN_TYPES[Math.floor(Math.random()*RUN_TYPES.length)];
+  img.className = 'couple-img fleeing';
+  img.dataset.side = side;
+  img.style.left = xPct + '%';
+  img.style.bottom = bottomPx + 'px';
+  img.style.height = (95 + Math.random()*30) + 'px';
+  coupleField.appendChild(img);
+  requestAnimationFrame(()=>img.classList.add('in'));
+  setTimeout(()=>img.classList.add(side==='L' ? 'flee-l' : 'flee-r'), 400);
+  setTimeout(()=>img.remove(), 2200);
+}
+
+/* ============================================
+   자동 웨이브
+============================================ */
+function spawnInterval(){
+  // 웨이브 1: 4500ms, 웨이브 5+: 1500ms
+  return Math.max(1500, 5000 - state.wave*600);
+}
+function tickWave(){
+  if(state.gameOver) return;
+  const n = 1 + Math.floor(Math.random() * Math.min(3, 1 + Math.floor(state.wave/2)));
+  for(let i=0;i<n;i++){
+    setTimeout(()=>spawnHappyCouple(), i*150);
+  }
+  // 다음 스폰 예약
+  state.spawnTimer = setTimeout(tickWave, spawnInterval());
+}
+// 30초마다 웨이브 +1
+setInterval(()=>{
+  if(state.gameOver) return;
+  state.wave++;
+  updateHUD();
+  toast(`💥 WAVE ${state.wave} 시작!`);
+}, 30000);
+// 시작
+setTimeout(tickWave, 1500);
+
+/* ============================================
+   쿨다운
+============================================ */
+const COOLDOWNS = {curse:2000, rain:6000, scan:0, book:0};
+const cooling = {};
+function startCooldown(act, ms){
+  if(ms<=0) return;
+  cooling[act] = true;
+  const btn = document.querySelector(`.act[data-act="${act}"]`);
+  btn.classList.add('cooling');
+  const cd = btn.querySelector('.cd');
+  let elapsed = 0;
+  const step = 50;
+  cd.style.width = '100%';
+  const id = setInterval(()=>{
+    elapsed += step;
+    cd.style.width = (100 * (1 - elapsed/ms)) + '%';
+    if(elapsed >= ms){
+      clearInterval(id);
+      cd.style.width = '0%';
+      btn.classList.remove('cooling');
+      cooling[act] = false;
     }
+  }, step);
+}
 
-    function saveWeeklyStore() {
-      localStorage.setItem(WEEKLY_STORE_KEY, JSON.stringify(weeklyStore));
-    }
+/* ============================================
+   게임오버 / 재시작
+============================================ */
+function endGame(){
+  if(state.gameOver) return;
+  state.gameOver = true;
+  clearTimeout(state.spawnTimer);
+  document.getElementById('finalScore').textContent = state.score;
+  document.getElementById('finalCombo').textContent = 'x' + state.maxCombo;
+  document.getElementById('finalWave').textContent = state.wave;
+  document.getElementById('gameover').classList.add('show');
+  flashLightning();
+  stageEl.classList.add('shake');
+}
+function restartGame(){
+  document.getElementById('gameover').classList.remove('show');
+  document.querySelectorAll('.couple-img').forEach(c=>c.remove());
+  state.gameOver = false;
+  state.wave = 1; state.score = 0; state.combo = 1; state.maxCombo = 1;
+  state.lastBreakAt = 0;
+  state.anger = 30;
+  setAnger(30);
+  state._criticalSince = null;
+  updateHUD();
+  setTimeout(tickWave, 1000);
+}
+updateHUD();
 
-    function loadLogs() {
-      try {
-        const raw = localStorage.getItem(LOG_STORE_KEY);
-        const parsed = raw ? JSON.parse(raw) : [];
-        if (!Array.isArray(parsed)) return [];
-        let changed = false;
-        parsed.forEach((log, idx) => {
-          if (!log.id) {
-            log.id = `legacy-${idx}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-            changed = true;
-          }
-        });
-        if (changed) saveLogs(parsed);
-        return parsed;
-      } catch (_) {
-        return [];
-      }
-    }
+/* ============================================
+   액션 버튼
+============================================ */
+const stageEl = document.getElementById('stage');
+const tipsBook = [
+  "솔로 1년 = 멘탈 1단계 진화. 평정심 +50",
+  "커플은 휘발성, 적금은 영구성.",
+  "혼밥 24렙 달성 시 어떤 식당도 무섭지 않다.",
+  "비 오는 날 우산 같이 쓰자는 사람 = 환상. 그냥 뛰어라.",
+  "기념일 0개 = 알림 0개 = 평화 100%.",
+  "사랑은 도파민, 솔로는 세로토닌. 의학적으로 솔로가 안정적.",
+  "커플은 두 명 분 비용, 솔로는 한 명 분 행복. 가성비 갑.",
+  "솔로의 진정한 무기는 '시간 부자'다."
+];
 
-    function saveLogs(logs) {
-      localStorage.setItem(LOG_STORE_KEY, JSON.stringify(logs));
-    }
+document.querySelectorAll('.act').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    const act = btn.dataset.act;
+    if(state.gameOver && act!=='book') return;
+    if(cooling[act]) return;
+    if(act==='curse'){ doCurse();  startCooldown('curse', COOLDOWNS.curse); }
+    if(act==='rain'){  doRain();   startCooldown('rain',  COOLDOWNS.rain);  }
+    if(act==='scan'){  doScan();   startCooldown('scan',  COOLDOWNS.scan);  }
+    if(act==='book'){  doBook(); }
+  });
+});
 
-    function upsertSummaryLog(entry) {
-      const logs = loadLogs();
-      const idx = logs.findIndex((log) => log.id === entry.id);
-      if (idx >= 0) {
-        logs[idx] = { ...logs[idx], ...entry };
-      } else {
-        logs.push(entry);
-      }
-      saveLogs(logs);
-    }
+function doCurse(){
+  stageEl.classList.remove('shake');
+  void stageEl.offsetWidth;
+  stageEl.classList.add('shake');
+  flashLightning();
 
-    function removeSummaryLog(logId) {
-      if (!logId) return;
-      const logs = loadLogs();
-      const filtered = logs.filter((log) => log.id !== logId);
-      if (filtered.length !== logs.length) {
-        saveLogs(filtered);
-      }
-    }
+  const happy = [...document.querySelectorAll('.couple-img.happy')];
+  let broken = 0;
+  if(happy.length){
+    // 광역공격: 콤보는 안 받지만 커플 수만큼 점수
+    happy.forEach(img => { cursifyCouple(img); broken++; });
+    const gained = broken * 8; // 광역은 약간 약함
+    state.score += gained;
+    state.couples += broken;
+    couples.textContent = state.couples;
+    // 가운데 떠오르는 점수
+    const fs = document.createElement('div');
+    fs.className='float-score combo';
+    fs.style.left='50%'; fs.style.bottom='280px';
+    fs.textContent = `광역 저주! +${gained}`;
+    coupleField.appendChild(fs);
+    setTimeout(()=>fs.remove(),1200);
+  } else {
+    spawnFleeingCouple();
+    broken = 1;
+  }
+  setAnger(state.anger - 15); // 분노 약간 해소
+  updateHUD();
+  toast(`💔 저주 발동! ${broken}쌍 박살!`);
+}
+function doRain(){
+  state.rainPower = 3;
+  spawnRain(260);
+  toast('🌧️ 강수량 +200% (5초간)');
+  setTimeout(()=>{
+    state.rainPower = 1;
+    spawnRain(140);
+  },5000);
+}
+function doScan(){
+  state.scanBoost = true;
+  const n = 1 + Math.floor(Math.random()*5); // 1~5
+  setDetect(100);
+  spawnBlips(Math.max(4, n+2));
+  for(let i=0;i<n;i++){
+    setTimeout(()=>spawnHappyCouple(), i*180);
+  }
+  toast(`🎯 행복한 커플 ${n}쌍 포착! (위험!)`);
+  setTimeout(()=>{
+    state.scanBoost = false;
+    setDetect(87);
+  },4000);
+}
+function doBook(){
+  const tip = tipsBook[Math.floor(Math.random()*tipsBook.length)];
+  document.getElementById('modalBody').textContent = tip;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+}
+document.getElementById('modal').addEventListener('click', e=>{
+  if(e.target.id==='modal') closeModal();
+});
 
-    function updateSummaryFromLogs() {
-      const logs = loadLogs();
-      const now = new Date();
-      const currentYear = now.getFullYear();
-      const currentMonth = now.getMonth();
-
-      let monthBottles = 0;
-      let monthAmount = 0;
-      let yearBottles = 0;
-      let yearAmount = 0;
-
-      logs.forEach((log) => {
-        const d = new Date(log.date);
-        if (Number.isNaN(d.getTime())) return;
-        const y = d.getFullYear();
-        const m = d.getMonth();
-        const count = log.count || 1;
-        const price = typeof log.price === "number" ? log.price : 0;
-
-        if (y === currentYear) {
-          yearBottles += count;
-          yearAmount += price;
-          if (m === currentMonth) {
-            monthBottles += count;
-            monthAmount += price;
-          }
-        }
-      });
-
-      summaryMonthBottles.textContent = monthBottles;
-      summaryMonthAmount.textContent = monthAmount.toLocaleString();
-      summaryYearBottles.textContent = yearBottles;
-      summaryYearAmount.textContent = yearAmount.toLocaleString();
-    }
-
-    function getTodayISO() {
-      const now = new Date();
-      return [
-        now.getFullYear(),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0"),
-      ].join("-");
-    }
-
-    function getWeekKeyFromISO(isoDate) {
-      const [y, m, d] = isoDate.split("-").map(Number);
-      const date = new Date(y, m - 1, d);
-      const day = date.getDay();
-      date.setDate(date.getDate() - day);
-      return [
-        date.getFullYear(),
-        String(date.getMonth() + 1).padStart(2, "0"),
-        String(date.getDate()).padStart(2, "0"),
-      ].join("-");
-    }
-
-    function ensureWeekExists() {
-      if (!weeklyStore[currentWeekKey]) {
-        weeklyStore[currentWeekKey] = { goal: null, logs: [] };
-        saveWeeklyStore();
-      }
-    }
-
-    function ensureWeekRollover() {
-      const last = localStorage.getItem(LAST_WEEK_KEY);
-      if (last !== currentWeekKey) {
-        localStorage.setItem(LAST_WEEK_KEY, currentWeekKey);
-        ensureWeekExists();
-      }
-    }
-
-    function ensureWeekLogIds() {
-      let changed = false;
-      currentWeek.logs.forEach((log, idx) => {
-        if (!log.id) {
-          log.id = generateLogId(currentWeekKey, idx);
-          changed = true;
-        }
-      });
-      if (changed) saveWeeklyStore();
-    }
-
-    function generateLogId(weekKey, index) {
-      return `${weekKey}-${index}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    }
-
-    function getDayLabelFromDate(dateStr) {
-      if (!dateStr) return "";
-      const d = new Date(dateStr);
-      if (Number.isNaN(d.getTime())) return "";
-      return dayNames[d.getDay()];
-    }
-
-    function formatDateLabel(dateStr) {
-      if (!dateStr) return "";
-      const parts = dateStr.split("-");
-      if (parts.length !== 3) return dateStr;
-      return `${parts[1]}.${parts[2]}`;
-    }
-
-    function showGoalControls() {
-      controlsPanel.classList.remove("hidden");
-      changeGoalButton.classList.remove("visible");
-      sojuGrid.innerHTML = "";
-      goalStatus.textContent = "이번 주 목표를 입력해 주세요.";
-    }
-
-    function hideGoalControls() {
-      controlsPanel.classList.add("hidden");
-      changeGoalButton.classList.add("visible");
-    }
-
-    function setFillLevel(bottle, ratio) {
-      const liquid = bottle.querySelector(".liquid");
-      if (liquid) {
-        liquid.style.setProperty("--fill-level", ratio);
-      }
-    }
-
-    function createBottleElement(index) {
-      const bottle = sojuTemplate.content.firstElementChild.cloneNode(true);
-      bottle.dataset.index = index;
-      const label = bottle.querySelector(".bottle-label");
-      const dayText = label.querySelector(".label-day");
-      const dateText = label.querySelector(".label-date");
-      const memoText = label.querySelector(".label-memo");
-
-      if (index < currentWeek.logs.length) {
-        const log = currentWeek.logs[index];
-        if (!log.id) {
-          log.id = generateLogId(currentWeekKey, index);
-          saveWeeklyStore();
-        }
-        bottle.classList.add("drained");
-        setFillLevel(bottle, 0);
-        label.classList.remove("empty");
-        dayText.textContent = getDayLabelFromDate(log.date);
-        dateText.textContent = formatDateLabel(log.date);
-        memoText.textContent = log.memo ? log.memo.slice(0, 24) : "";
-      } else {
-        bottle.classList.remove("drained");
-        setFillLevel(bottle, 1);
-        label.classList.add("empty");
-        dayText.textContent = "";
-        dateText.textContent = "";
-        memoText.textContent = "";
-      }
-
-      return bottle;
-    }
-
-    function renderWeekState() {
-      currentWeek = weeklyStore[currentWeekKey];
-      ensureWeekLogIds();
-      consumedCount = currentWeek.logs.length;
-      if (currentWeek.goal === null) {
-        showGoalControls();
-      } else {
-        hideGoalControls();
-        renderBottles();
-      }
-    }
-
-    function renderBottles() {
-      sojuGrid.innerHTML = "";
-      if (!currentWeek.goal) {
-        goalStatus.textContent = "이번 주 목표를 입력해 주세요.";
-        return;
-      }
-      for (let i = 0; i < currentWeek.goal; i += 1) {
-        sojuGrid.appendChild(createBottleElement(i));
-      }
-      consumedCount = currentWeek.logs.length;
-      updateGoalStatus();
-    }
-
-    function updateGoalStatus() {
-      goalBoard.classList.remove("on-track", "over-goal");
-      if (!currentWeek.goal) {
-        goalStatus.textContent = "이번 주 목표를 입력해 주세요.";
-        return;
-      }
-      const remaining = Math.max(currentWeek.goal - consumedCount, 0);
-      goalStatus.textContent = `이번 주 목표: ${currentWeek.goal}병 / 기록: ${consumedCount}병 (남은 ${remaining}병)`;
-      goalBoard.classList.add(consumedCount > currentWeek.goal ? "over-goal" : "on-track");
-    }
-
-    function handleRegisterGoal() {
-      const value = parseInt(goalInput.value, 10);
-      if (Number.isNaN(value) || value <= 0) {
-        goalStatus.textContent = "1병 이상 정수로 목표를 입력해 주세요.";
-        goalInput.focus();
-        return;
-      }
-      currentWeek.goal = value;
-      if (currentWeek.logs.length > value) {
-        currentWeek.logs = currentWeek.logs.slice(0, value);
-      }
-      saveWeeklyStore();
-      goalInput.value = "";
-      renderWeekState();
-    }
-
-    function handleChangeGoal() {
-      goalInput.value = currentWeek.goal ?? "";
-      showGoalControls();
-    }
-
-    function handleBottleClick(event) {
-      const bottle = event.target.closest(".soju");
-      if (!bottle || currentWeek.goal === null) return;
-      const index = Number(bottle.dataset.index);
-      if (Number.isNaN(index)) return;
-      if (index > currentWeek.goal - 1) return;
-
-      selectedBottleIndex = index;
-      editingExisting = index < currentWeek.logs.length;
-
-      if (editingExisting) {
-        const log = currentWeek.logs[index];
-        logDateInput.value = log.date || getTodayISO();
-        logMemoInput.value = log.memo || "";
-        logPriceInput.value = log.price ? String(log.price) : "";
-      } else {
-        if (index > currentWeek.logs.length) {
-          alert("앞의 병부터 순서대로 기록해 주세요.");
-          return;
-        }
-        logDateInput.value = getTodayISO();
-        logMemoInput.value = "";
-        logPriceInput.value = "";
-      }
-
-      deleteLogButton.style.display = editingExisting ? "inline-flex" : "none";
-
-      logModal.classList.add("active");
-      logModal.setAttribute("aria-hidden", "false");
-      logDateInput.focus();
-    }
-
-    function handleLogSubmit(event) {
-      event.preventDefault();
-      if (selectedBottleIndex === null || currentWeek.goal === null) return;
-
-      const date = logDateInput.value || getTodayISO();
-      const memo = logMemoInput.value.trim().slice(0, 8);
-      const priceValue = Number.parseInt(logPriceInput.value, 10);
-      const price = Number.isNaN(priceValue) ? 0 : priceValue;
-
-      if (editingExisting) {
-        const log = currentWeek.logs[selectedBottleIndex];
-        log.date = date;
-        log.memo = memo;
-        log.price = price;
-        if (!log.id) {
-          log.id = generateLogId(currentWeekKey, selectedBottleIndex);
-        }
-        saveWeeklyStore();
-        upsertSummaryLog({ id: log.id, date, memo, price, count: 1 });
-      } else {
-        if (currentWeek.logs.length >= currentWeek.goal) {
-          alert("목표 병 수를 모두 기록했습니다.");
-          closeModal();
-          return;
-        }
-        if (selectedBottleIndex !== currentWeek.logs.length) {
-          alert("앞 순서부터 기록해 주세요.");
-          return;
-        }
-        const newLog = {
-          id: generateLogId(currentWeekKey, currentWeek.logs.length),
-          date,
-          memo,
-          price,
-        };
-        currentWeek.logs.push(newLog);
-        saveWeeklyStore();
-        upsertSummaryLog({ ...newLog, count: 1 });
-        consumedCount = currentWeek.logs.length;
-      }
-
-      renderBottles();
-      updateSummaryFromLogs();
-      closeModal();
-    }
-
-    function handleDeleteLog() {
-      if (!editingExisting || selectedBottleIndex === null) return;
-      const log = currentWeek.logs[selectedBottleIndex];
-      if (!log) {
-        closeModal();
-        return;
-      }
-      currentWeek.logs.splice(selectedBottleIndex, 1);
-      saveWeeklyStore();
-      if (log.id) removeSummaryLog(log.id);
-      consumedCount = currentWeek.logs.length;
-      renderBottles();
-      updateGoalStatus();
-      updateSummaryFromLogs();
-      closeModal();
-    }
-
-    function closeModal() {
-      logModal.classList.remove("active");
-      logModal.setAttribute("aria-hidden", "true");
-      selectedBottleIndex = null;
-      editingExisting = false;
-      logForm.reset();
-      deleteLogButton.style.display = "none";
-    }
-
-    function handleResetMonth() {
-      const logs = loadLogs();
-      const now = new Date();
-      const currentYear = now.getFullYear();
-      const currentMonth = now.getMonth();
-      const filtered = logs.filter((log) => {
-        const d = new Date(log.date);
-        if (Number.isNaN(d.getTime())) return false;
-        const y = d.getFullYear();
-        const m = d.getMonth();
-        return !(y === currentYear && m === currentMonth);
-      });
-      saveLogs(filtered);
-      updateSummaryFromLogs();
-    }
-
-    function handleResetYear() {
-      const logs = loadLogs();
-      const currentYear = new Date().getFullYear();
-      const filtered = logs.filter((log) => {
-        const d = new Date(log.date);
-        if (Number.isNaN(d.getTime())) return false;
-        return d.getFullYear() !== currentYear;
-      });
-      saveLogs(filtered);
-      updateSummaryFromLogs();
-    }
-  </script>
-
+/* 시작 인사 */
+setTimeout(()=>toast('✨ 솔로 지옥에 어서오세요'), 600);
+</script>
 </body>
 </html>
